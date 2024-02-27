@@ -1,6 +1,6 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { ChargingStationService } from './charging-station.service';
-import { ValidateCharghingStationDto } from './dto/validate-charghing-statation.dto';
+import { ValidateChargingStationDto } from './dto/validate-charging-station.dto';
 
 @Controller('charging-station')
 export class ChargingStationController {
@@ -9,8 +9,9 @@ export class ChargingStationController {
   ) {}
 
   @Post('validate')
-  async validate(@Body() validateStationDto: ValidateCharghingStationDto) {
-    await this.chargingStationService.validateCharghingStation(
+  @HttpCode(200)
+  async validate(@Body() validateStationDto: ValidateChargingStationDto) {
+    await this.chargingStationService.validateChargingStation(
       validateStationDto,
     );
   }
