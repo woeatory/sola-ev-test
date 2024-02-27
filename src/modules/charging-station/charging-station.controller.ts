@@ -1,4 +1,11 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpException,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
 import { ChargingStationService } from './charging-station.service';
 import { ValidateChargingStationDto } from './dto/validate-charging-station.dto';
 
@@ -11,8 +18,12 @@ export class ChargingStationController {
   @Post('validate')
   @HttpCode(200)
   async validate(@Body() validateStationDto: ValidateChargingStationDto) {
-    await this.chargingStationService.validateChargingStation(
-      validateStationDto,
-    );
+    const response =
+      await this.chargingStationService.validateChargingStation(
+        validateStationDto,
+      );
+    if (response.length > 0) {
+      throw new HttpException(response, HttpStatus.BAD_REQUEST);
+    }
   }
 }
