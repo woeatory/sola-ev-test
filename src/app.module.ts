@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
+import { ChargingStationModule } from './modules/charging-station/charging-station.module';
 
 @Module({
-  imports: [],
+  imports: [ChargingStationModule],
   controllers: [],
   providers: [],
 })
