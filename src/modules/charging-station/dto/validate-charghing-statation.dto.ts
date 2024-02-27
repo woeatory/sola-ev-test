@@ -1,11 +1,23 @@
-import { Connector } from '../entity/connector';
+import { IsBoolean, IsString, IsUUID, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+import { ConnectorDto } from './connector.dto';
+import { GeoCoordsDto } from './geocoords.dto';
 
 export class ValidateCharghingStationDto {
-  id: number;
+  @IsUUID()
+  id: string;
+  @IsString()
   title: string;
+  @IsString()
   description: string;
+  @IsString()
   address: string;
-  geocoords: { latitude: number; longitude: number };
+  @ValidateNested({ each: true })
+  @Type(() => GeoCoordsDto)
+  geocoords: GeoCoordsDto;
+  @IsBoolean()
   isPublic: boolean;
-  connectorsList: Connector[];
+  @ValidateNested({ each: true })
+  @Type(() => ConnectorDto)
+  connectorsList: ConnectorDto[];
 }

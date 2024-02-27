@@ -2,7 +2,7 @@ import { Connector } from './connector';
 
 export class ChargingStation {
   constructor(
-    id: number,
+    id: string,
     title: string,
     description: string,
     address: string,
